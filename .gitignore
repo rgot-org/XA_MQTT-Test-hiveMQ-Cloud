@@ -396,4 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/AppMQTT/AppMQTT/Config.cs
+/AppMQTT/AppMQTT/config.json
