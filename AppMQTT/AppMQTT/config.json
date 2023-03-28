@@ -1,0 +1,8 @@
+{
+    "Server": "53eb5fd1a3d34d19b258331ca670ec17.s1.eu.hivemq.cloud",
+    "Port": 8883,
+    "User": "snir1",
+    "Password": "Tourelle@95",
+    "PubTopic": "xamarin/publish",
+    "SubTopic": "xamarin/subscribe"
+}
