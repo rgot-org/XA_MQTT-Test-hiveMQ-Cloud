@@ -14,14 +14,12 @@ namespace AppMQTT
 {
     public partial class MainPage : ContentPage
     {
-        MqttHandler client = new MqttHandler();
+        MqttHandler client = new MqttHandler("config.json");        
         public MainPage()
         {
             InitializeComponent();
             MessagingCenter.Subscribe<MqttHandler,String>(this, "message", (sender, message) => _majProprietes(message));
             MessagingCenter.Subscribe<MqttHandler>(this, "connected", (sender) => _majConnexion(sender));
-            Config config = Config.init("config.json");    
-            client.MqttInit(config);
         }
 
         private void _majProprietes(String message)

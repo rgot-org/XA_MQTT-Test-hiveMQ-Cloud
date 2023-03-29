@@ -21,9 +21,8 @@ namespace AppMQTT
     {
         public static Config init(string configFileName)
         {
-            string jsonFileName = "config.json";
             var assembly = typeof(MainPage).GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{jsonFileName}");
+            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{configFileName}");
             using (var reader = new System.IO.StreamReader(stream))
             {
                 var jsonString = reader.ReadToEnd();

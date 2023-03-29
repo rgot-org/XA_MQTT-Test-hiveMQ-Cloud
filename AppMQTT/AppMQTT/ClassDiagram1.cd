@@ -17,8 +17,8 @@
       <FileName>MqttHandler.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="mqttClient" />
       <Field Name="factory" />
+      <Field Name="mqttClient" />
       <Property Name="_config" />
     </ShowAsAssociation>
   </Class>

@@ -10,34 +10,23 @@ using Xamarin.Forms;
 
 namespace AppMQTT
 {
-    //class Config
-    //{
-    //    public string Server { get; set; }
-    //    public int Port { get; set; }
-    //    public string User { get; set; }
-    //    public string Password { get; set; }
-    //    public string PubTopic { get; set; }
-    //    public string SubTopic { get; set; }
-    //}
     class MqttHandler
     {
         MqttFactory factory = new MqttFactory();
         private IMqttClient mqttClient;
         private Config _config { get; set; }
-        public Boolean isConnected()
+        public MqttHandler( string config)
         {
-            return mqttClient.IsConnected;
-        }
-        public void MqttInit(Config config)
-        {
-            _config = config;
+            _config = Config.init(config);
             mqttClient = factory.CreateMqttClient();
             mqttClient.ConnectedAsync += (e => ConnectedHandler(e));// une fois que le client est connecte appelle la fonction  "ConnectedHandler"
             mqttClient.ApplicationMessageReceivedAsync += e => MessageReceivedHandler(e);// à la reception d'un message appelle la fonction "MessageReceivedHandler"
             mqttClient.DisconnectedAsync += e => DisconnectedHandler(e);// à la deconnexion apelle "DisconnectedHandler"
             Task.Run(async () => { await Connect(); }); // connexion initiale
-            //Connect().Wait();
-            //await Connect();
+        }
+        public Boolean isConnected()
+        {
+            return mqttClient.IsConnected;
         }
         public async Task Connect()
         {
@@ -89,12 +78,13 @@ namespace AppMQTT
             // voir https://github.com/chkr1011/MQTTnet/wiki/Client#subscribing-to-a-topic
             await mqttClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(_config.SubTopic).Build());
         }
-        private async Task MessageReceivedHandler(MqttApplicationMessageReceivedEventArgs arg)
+        private Task MessageReceivedHandler(MqttApplicationMessageReceivedEventArgs arg)
         {
             // voir https://github.com/chkr1011/MQTTnet/wiki/Client#consuming-messages
             //recupération le la payload et conversion byte[]-> string
             String str = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload);
             MessagingCenter.Send(this,"message", str);
+            return Task.CompletedTask;
         }
 
 
